@@ -8,7 +8,6 @@ import yaml
 
 random.seed(100)
 
-
 class AWSDBConnector:
     def __init__(self):
         self.creds = {}
