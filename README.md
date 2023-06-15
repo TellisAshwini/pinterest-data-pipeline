@@ -25,12 +25,12 @@ Two process are involved in this data pipelining
 1. Batch data processing
 2. Stream data processing
 
-For the Batch data processing the data is extracted from the Amazon RDS using Kafka REST API that is installed within an EC2 Client machine and this data is stored in the Amazon S3 Bucket in json format. S3 Bucket is mount to the Databricks and data is load into Databricks hence stored in dataframes and the data is then cleaned and analysed
+For the Batch data processing the data is extracted from the Amazon RDS using Kafka REST API that is installed within an EC2 Client machine and this data is stored in the Amazon S3 Bucket in json format. S3 Bucket is mount to the Databricks and data is load into Databricks. The data is then stored in dataframes and the data is then cleaned and analysed. To automate this process AWS MWAA (managed Workflows for Apache Airflow) can be used.
 
 For the Streaming data, the data is extracted from the Amazon RDS using the REST API, the data is stored in the Kinesis steams in shards. This steaming data is loading into the Databricks in real-time and keeps appending into the dataframe. The data is cleaned and delta tables are created in the databricks 
 
 ### **Data Exploration**
-We explore a sample of data extracted from the amazon RDS and get familiarised with the table structure and its column information. These are the three tables that we will be working on
+We first explore a sample of data extracted from the amazon RDS and get familiarised with the table structure and its column information. These are the three tables:
 - `pinterest_data`: contains data about posts being updated to Pinterest
 - `geolocation_data`: contains data about the geolocation of each Pinterest post found in pinterest_data
 - `user_data`: contains data about the user that has uploaded each post found in pinterest_data
@@ -40,8 +40,9 @@ We explore a sample of data extracted from the amazon RDS and get familiarised w
 ### **Setting up the EC2 instance & Apache Kafka**
 
 EC2 instances are the building blocks of cloud computing. In essence, they are remote computers that can be employed to run code on a cluster or a single computer. An EC2 instance can be accessed through a terminal. 
-- In the AWS consoleto set up an EC2 instance, key-pair file is created for authentication and a security group is created with the inbound rules as ‘HTTP: Anywhere IPv4’, ‘HTTPS: Anywhere IPv4’, ‘SSH: My IP’. 
+- In the AWS console to set up an EC2 instance, key-pair file is created for authentication and a security group is created with the inbound rules as ‘HTTP: Anywhere IPv4’, ‘HTTPS: Anywhere IPv4’, ‘SSH: My IP’. 
 - Created EC2 Instance choosing Amazon Linux 2 AMI.
+
 <img src = "images/image2_ec2_instance.png" width = "320" height = "150" />
 
 - Once the EC2 instance is launched and connected, Kafka and IAM MSK authentication package is installed on the client EC2 machine and configured the Kafka client properties to use AWS IAM authentication.
@@ -86,51 +87,57 @@ EC2 instances are the building blocks of cloud computing. In essence, they are r
 
 ### **Data Analysis**
 
-- The most popular Pinterest category, people post to, based on their country. 
-    - With the columns `country`, `category` and `category_count`
-# image
+The most popular Pinterest category, people post to, based on their country. 
+
+ - With the columns `country`, `category` and `category_count`
+
+<img src = "images/task_4.png" width = "320" height = "300" />
+
+\
+Number of posts each category had between 2018 and 2022 and most popular category in each year.
+ - With the columns `post_year`, `category`, `category_count`
+ - Here the `category` column shows the most popular category in that year
+
+<img src = "images/task_5.png" width = "250" height = "150" />
 
 
-- Number of posts each category had between 2018 and 2022 and most popular category in each year.
-    - With the columns `post_year`, `category`, `category_count`
-    - Here the `category` column shows the most popular category in that year
-# image
+\
+The user with the most followers for each country
+ - With the columns `country`, `poster_name`, `follower_count`
 
-
-- The user with the most followers for each country
-    - With the columns `country`, `poster_name`, `follower_count`
-# IMAGE 6
 <img src = "images/task6_step1.png" width = "320" height = "300" />
 
+\
+The most popular category people post to, based on the age groups - 18-24, 25-35, 36-50, +50
+ - With the columns `age_group`, `category`, `category_count`
+ 
+<img src = "images/task_7.png" width = "250" height = "150" />
 
-- The most popular category people post to, based on the age groups - 18-24, 25-35, 36-50, +50
-    - With the columns `age_group`, `category`, `category_count`
-# image
 
+\
+The median follower count for users in the age groups, 18-24, 25-35, 36-50, +50
+ - With the columns `age_group`, `median_follower_count`
 
-- The median follower count for users in the age groups, 18-24, 25-35, 36-50, +50
-     - With the columns `age_group`, `median_follower_count`
-# IMAGE 8
 <img src = "images/task_8.png" width = "250" height = "150" />
 
 
+\
+How many users have joined between 2015 and 2020.
+ - With the columns `post_year`, `number_users_joined`
 
-- How many users have joined between 2015 and 2020.
-    - With the columns `post_year`, `number_users_joined`
-# image 9
 <img src = "images/task_9.png" width = "250" height = "150" />
 
 
+\
+The median follower count of users who have joined between 2015 and 2020.
+ - With the columns `post_year`, `median_follower_count`
 
-- The median follower count of users who have joined between 2015 and 2020.
-    - With the columns `post_year`, `median_follower_count`
-# image 10
 <img src = "images/task_10.png" width = "250" height = "150" />
 
+\
+The median follower count of users who have joined between 2015 and 2020, based on age group that they are part of.
+ - With the columns `age_group`, `post_year`, `median_follower_count`
 
-- The median follower count of users who have joined between 2015 and 2020, based on age group that they are part of.
-    - With the columns `age_group`, `post_year`, `median_follower_count`
-# image 11
 <img src = "images/task_11.png" width = "320" height = "300" />
 
 
@@ -142,8 +149,3 @@ AWS Kinesis can collect streaming data in real time or near real-time. Kinesis e
 - Creating two child resources 'record' and 'records' and setup and configure a PUT method for both the child resources and hence deploy the API, get a new invoke URL. This URL is used to extract data from Amazon RDS and store it in the respective kinesis data streams
 - The data is loaded into the Databricks similar to that of batch processing and Dataframes are created. The data keeps appending to the dataframe. The data will be read in serialized format and can be deserialized using the .selectEcpr() method.
 - These Dataframes are then cleaned and data analysis is been performed using PySpark
-
-
-
-
-
