@@ -87,59 +87,37 @@ EC2 instances are the building blocks of cloud computing. In essence, they are r
 
 ### **Data Analysis**
 
-The most popular Pinterest category, people post to, based on their country. 
-
- - With the columns `country`, `category` and `category_count`
+*1. The most popular Pinterest category, people post to, based on their country.*
 
 <img src = "images/task_4.png" width = "320" height = "300" />
 
-\
-Number of posts each category had between 2018 and 2022 and most popular category in each year.
- - With the columns `post_year`, `category`, `category_count`
- - Here the `category` column shows the most popular category in that year
+*2. Number of posts each category had between 2018 and 2022 and most popular category in each year.*
 
 <img src = "images/task_5.png" width = "250" height = "150" />
 
-
-\
-The user with the most followers for each country
- - With the columns `country`, `poster_name`, `follower_count`
+*3. The user with the most followers for each country*
 
 <img src = "images/task6_step1.png" width = "320" height = "300" />
 
-\
-The most popular category people post to, based on the age groups - 18-24, 25-35, 36-50, +50
- - With the columns `age_group`, `category`, `category_count`
+*4. The most popular category people post to, based on the age groups - 18-24, 25-35, 36-50, +50*
  
 <img src = "images/task_7.png" width = "250" height = "150" />
 
-
-\
-The median follower count for users in the age groups, 18-24, 25-35, 36-50, +50
- - With the columns `age_group`, `median_follower_count`
+*5. The median follower count for users in the age groups, 18-24, 25-35, 36-50, +50*
 
 <img src = "images/task_8.png" width = "250" height = "150" />
 
-
-\
-How many users have joined between 2015 and 2020.
- - With the columns `post_year`, `number_users_joined`
+*6. How many users have joined between 2015 and 2020.*
 
 <img src = "images/task_9.png" width = "250" height = "150" />
 
-
-\
-The median follower count of users who have joined between 2015 and 2020.
- - With the columns `post_year`, `median_follower_count`
+*7. The median follower count of users who have joined between 2015 and 2020.*
 
 <img src = "images/task_10.png" width = "250" height = "150" />
 
-\
-The median follower count of users who have joined between 2015 and 2020, based on age group that they are part of.
- - With the columns `age_group`, `post_year`, `median_follower_count`
+*8. The median follower count of users who have joined between 2015 and 2020, based on age group that they are part of.*
 
 <img src = "images/task_11.png" width = "320" height = "300" />
-
 
 >## **Stream Processing**
 
